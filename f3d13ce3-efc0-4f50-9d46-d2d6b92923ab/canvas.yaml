@@ -69,15 +69,15 @@ layers:
   - auto_size: false
     canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
     compute_settings: null
-    description: Performs 3-fold stratified cross-validation on ensemble models with
-      out-of-fold predictions and PR-AUC evaluation
+    description: Runs 2-fold stratified cross-validation on ensemble models, generating
+      out-of-fold predictions and averaging test predictions with PR-AUC metric
     height: 1000
     id: 627134a3-e991-4536-a115-e3fb5b483a14
     layer_id: 4b8def36-7442-498b-bb04-13973447ba5b
     name: stratified_kfold_cv
     parent_id: null
     properties: {}
-    status: 4
+    status: 3
     type: 1
     variables: null
     width: 1600
@@ -86,15 +86,15 @@ layers:
   - auto_size: false
     canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
     compute_settings: null
-    description: Combines weighted predictions from HGB and RF models, evaluates ensemble
-      PR-AUC score, and exports final submission file
+    description: Evaluates weighted ensemble predictions on OOF data and creates submission
+      CSV with final model scores
     height: 1000
     id: 6a29073a-dc94-4da8-8d53-2b129c2af86b
     layer_id: 4b8def36-7442-498b-bb04-13973447ba5b
     name: ensemble_weighted_predictions
     parent_id: null
     properties: {}
-    status: 1
+    status: 3
     type: 1
     variables: null
     width: 1600
@@ -178,7 +178,7 @@ layers:
     name: python_block_10
     parent_id: null
     properties: {}
-    status: 1
+    status: 3
     type: 1
     variables: null
     width: 1600
