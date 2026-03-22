@@ -23,6 +23,24 @@ blocks:
 - auto_size: false
   canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
   compute_settings: null
+  description: Trains LightGBM with 5-fold stratified CV on imbalanced classification
+    task, handles missing values and categorical encoding, generates OOF predictions
+    and test submission
+  height: 1000
+  id: 2aa14911-be0a-4782-81b0-c76cfe567068
+  layer_id: 4b8def36-7442-498b-bb04-13973447ba5b
+  name: lgb_cv_classifier
+  parent_id: null
+  properties: {}
+  status: 3
+  type: 1
+  variables: null
+  width: 1600
+  x: 0
+  y: 5000
+- auto_size: false
+  canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
+  compute_settings: null
   description: Generates statistical features from binary and numeric columns (sum,
     mean, std, max, min) for train and test datasets
   height: 1000
@@ -91,6 +109,24 @@ blocks:
 - auto_size: false
   canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
   compute_settings: null
+  description: Trains LightGBM with 5-fold CV on 476k samples, handles missing values
+    via median imputation and missing indicators, balances class imbalance (27:1 ratio),
+    generates predictions with 0.0637 PR-AUC
+  height: 1000
+  id: 72e37410-192a-42c8-8383-671747405a87
+  layer_id: 4b8def36-7442-498b-bb04-13973447ba5b
+  name: lgb_cv_pipeline
+  parent_id: null
+  properties: {}
+  status: 3
+  type: 1
+  variables: null
+  width: 1600
+  x: 0
+  y: 6000
+- auto_size: false
+  canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
+  compute_settings: null
   description: Encodes categorical features with OrdinalEncoder and fills missing
     numeric values using training set medians
   height: 1000
@@ -142,19 +178,71 @@ blocks:
 - auto_size: false
   canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
   compute_settings: null
-  description: ''
+  description: Attempts to install LightGBM package for gradient boosting modeling
+  height: 1000
+  id: ca7c2cd0-af82-4d8e-bcae-9648c3549bc4
+  layer_id: 4b8def36-7442-498b-bb04-13973447ba5b
+  name: install_lightgbm
+  parent_id: null
+  properties: {}
+  status: 3
+  type: 1
+  variables: null
+  width: 1600
+  x: 0
+  y: 4500
+- auto_size: false
+  canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
+  compute_settings: null
+  description: Loads training data and displays target variable distribution (counts
+    and proportions)
   height: 1000
   id: df9b331c-2bb6-40ad-9c75-bbbeddd0ea65
   layer_id: 4b8def36-7442-498b-bb04-13973447ba5b
-  name: python_block_11
+  name: load_target_distribution
   parent_id: null
   properties: {}
-  status: 1
+  status: 3
   type: 1
   variables: null
   width: 1600
   x: 2000
   y: 3500
+- auto_size: false
+  canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
+  compute_settings: null
+  description: 'Displays training data summary: shape, target class distribution,
+    sample rows, column types, and missing values'
+  height: 1000
+  id: e7ac0e30-7c78-4195-9fe1-12b262696531
+  layer_id: 4b8def36-7442-498b-bb04-13973447ba5b
+  name: data_exploration_summary
+  parent_id: null
+  properties: {}
+  status: 3
+  type: 1
+  variables: null
+  width: 1600
+  x: 0
+  y: 5500
+- auto_size: false
+  canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
+  compute_settings: null
+  description: Trains ensemble of gradient boosting and random forest models with
+    5-fold CV, blends predictions with weighted averaging, and exports test predictions
+    to CSV
+  height: 1000
+  id: ed739a98-425c-48ed-b359-3a9719aaaa51
+  layer_id: 4b8def36-7442-498b-bb04-13973447ba5b
+  name: ensemble_classification_pipeline
+  parent_id: null
+  properties: {}
+  status: 4
+  type: 1
+  variables: null
+  width: 1600
+  x: 0
+  y: 4000
 - auto_size: false
   canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
   compute_settings: null
@@ -191,6 +279,11 @@ blocks:
   y: 3500
 edges:
 - canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
+  id: 0d6f95be-8d8f-4f9d-be0f-5362c1a09155
+  layer_id: 4b8def36-7442-498b-bb04-13973447ba5b
+  source: ed739a98-425c-48ed-b359-3a9719aaaa51
+  target: ca7c2cd0-af82-4d8e-bcae-9648c3549bc4
+- canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
   id: 17b655c8-8a3e-4974-a3ff-b2f6b673a9c2
   layer_id: 4b8def36-7442-498b-bb04-13973447ba5b
   source: a11203c4-9d76-494b-9ad7-69e6c2050b58
@@ -206,10 +299,20 @@ edges:
   source: f176a1fb-802f-44e0-b313-95f5b916f2e1
   target: 6a29073a-dc94-4da8-8d53-2b129c2af86b
 - canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
+  id: 76f55685-7ab5-48b8-9bed-44ed8b6cc681
+  layer_id: 4b8def36-7442-498b-bb04-13973447ba5b
+  source: 579b97cd-73b4-45c9-ba89-96fb4949759e
+  target: ed739a98-425c-48ed-b359-3a9719aaaa51
+- canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
   id: 82d995d5-46e9-4270-a805-db2f274e68c9
   layer_id: 4b8def36-7442-498b-bb04-13973447ba5b
   source: f2b4be86-9218-45cc-a62b-c80868605793
   target: df9b331c-2bb6-40ad-9c75-bbbeddd0ea65
+- canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
+  id: 8eb56363-9879-4d28-bece-4fd2cce925a6
+  layer_id: 4b8def36-7442-498b-bb04-13973447ba5b
+  source: 2aa14911-be0a-4782-81b0-c76cfe567068
+  target: e7ac0e30-7c78-4195-9fe1-12b262696531
 - canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
   id: 967316da-e950-4e7b-a32d-814f3bd3d1f6
   layer_id: 4b8def36-7442-498b-bb04-13973447ba5b
@@ -226,10 +329,20 @@ edges:
   source: 5732ee13-de05-4fc9-84db-8f662e289c30
   target: f2b4be86-9218-45cc-a62b-c80868605793
 - canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
+  id: a0582a43-66de-401b-a73e-daf88ca45d38
+  layer_id: 4b8def36-7442-498b-bb04-13973447ba5b
+  source: ca7c2cd0-af82-4d8e-bcae-9648c3549bc4
+  target: 2aa14911-be0a-4782-81b0-c76cfe567068
+- canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
   id: b9949746-13ca-4b91-97cf-fa2056bf1ddf
   layer_id: 4b8def36-7442-498b-bb04-13973447ba5b
   source: 87eb596e-2f00-4b1a-9540-37ff1cdf6b5a
   target: 5732ee13-de05-4fc9-84db-8f662e289c30
+- canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
+  id: c2654875-afd7-48ad-9d45-9e092dfac015
+  layer_id: 4b8def36-7442-498b-bb04-13973447ba5b
+  source: e7ac0e30-7c78-4195-9fe1-12b262696531
+  target: 72e37410-192a-42c8-8383-671747405a87
 - canvas_id: f3d13ce3-efc0-4f50-9d46-d2d6b92923ab
   id: d51afeea-ce21-4cb1-b5d7-b3c26a03d011
   layer_id: 4b8def36-7442-498b-bb04-13973447ba5b
